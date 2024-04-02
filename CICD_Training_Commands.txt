@@ -133,3 +133,5 @@ $ docker rm -f webserver
 $ docker rm -f httpd
 
 pinf
+
+Course completed
