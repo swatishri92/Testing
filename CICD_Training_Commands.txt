@@ -1,0 +1,135 @@
+Docker Commands: How to run a container in Ubantu
+
+sudo apt-get update
+*Install ssh package*
+sudo apt-get install openssh-server -y
+*start ssh service*
+sudo systemctl start sshd
+*check the status of ssh service*
+sudo systemctl status sshd 
+*check th ip adress*
+ip a
+note down the ip adress of 2nd interface ens33 it wll start from 192.168,X,X
+
+open the putty on your windows Lab machine
+put the ip address of the vm you have noted down and click i open
+username: rps
+password: rps
+
+
+Installing Docker
+$ sudo apt-get update
+
+$ sudo apt-get install docker.io -y
+
+to verify the installation 
+
+$ docker version
+
+you will get a permission denied error
+
+$sudo usermod -aG docker rps
+
+mke the user rps member fo docker group
+
+Logoff from the putty
+
+$ exit
+
+login again using putty and execute the command
+
+$ docker version
+
+Docker Labs 
+
+to list all the running containers 
+# docker ps
+
+or
+$ docker container ls
+
+to list all the containers (running + stopped)
+
+$ docker ps -a
+
+or
+
+$ docker container ls -a
+
+to run the first container
+
+$ docker run --name webapp -d docker.io/library/tomee:latest
+
+-d flag is used for detacch- running in backgrond mode
+
+$ to list the containers
+# docker ps
+
+to check the container IP
+
+$ docker inspect webapp
+
+the command will gove you the ip od the container. container ip is local to he machine where container is running
+
+to ping the container ip
+
+$ ping 172.17.0.2
+
+please check the ip it might be same or different for your container
+
+to verify the application 
+
+$ sudo apt-get install curl -y
+
+$ curl -v http://172.17.0.2:8080
+
+exposing the container to extenrla (outside the host)
+
+$ docker run --name webserver -d -P docker.io/library/nginx:latest
+
+check the container and host port using
+he 
+# docker ps 
+
+you will able to see the hostport in the port column
+
+access the application using the web brwser of you lab machine. Open your chrome browser and enter the url http:/VMip:hosport
+
+run anotherr container and expose it
+
+$ docker run --name httpd -d -P docker.io/library/httpd:latest
+
+check tge host port and acess the appllcatio usin gthe lab machine broswer using the http://VMip:hostport
+
+login to the container
+$docker exec -it webapp sh
+
+you will be inside the container. to come out exit
+
+$ exit
+
+to login to any container you need to use the docker exec -it container_name/id sh
+
+to stop the container
+
+$ docker stop container_id/name
+
+$ docker stop webapp
+
+to start the container 
+
+$ docker app
+
+To remove the container . first stop the container and then remove the container
+
+$ docker stop webapp
+
+$ docker rm webapp
+
+remove the container forcefully
+
+$ docker rm -f webserver
+
+$ docker rm -f httpd
+
+pinf
