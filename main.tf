@@ -22,6 +22,24 @@ provider "docker" {
 
 }
 
+resource "docker_image" "nginx" {
+
+ name = "nginx:latest"
+
+}
+
+
+
+# Create a container
+
+resource "docker_container" "foo" {
+
+ image = docker_image.nginx.latest
+
+ name = "foo"
+
+}
+
 
 
 
